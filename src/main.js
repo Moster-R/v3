@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus'  // 引入ElementPlus组件
 import 'element-plus/theme-chalk/index.css'
 import zhCn from "element-plus/es/locale/lang/zh-cn";  //国际化
 import * as ElementPlusIconsVue from '@element-plus/icons-vue' // 引入icon
-import './assets/gloable.css' //引入自定义全局css文件(覆盖element-plus自带的css)
+import './assets/css/gloable.css' //引入自定义全局css文件(覆盖element-plus自带的css)
 
 const app = createApp(App)
 app.use(store).use(router).use(ElementPlus,{locale: zhCn,}).mount('#app')
