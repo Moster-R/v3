@@ -1,6 +1,7 @@
 <template>
   <el-menu
-      default-active="2"
+      router
+      default-active="$router.path"
       :collapse="isCollapse"
       class="el-menu-vertical-demo"
       :collapse-transition="false"
@@ -11,9 +12,9 @@
       <img src="../assets/img/logo.png" style="width:30px;position:relative; top: 10px" alt="">
       <b style="color:white;" v-show="!isCollapse">后台管理系统</b>
     </div>
-    <el-menu-item index="1">
+    <el-menu-item index="/home">
       <el-icon>
-        <homeFilled/>
+        <HomeFilled/>
       </el-icon>
       <template #title>主页</template>
     </el-menu-item>
@@ -24,7 +25,12 @@
         </el-icon>
         <span>系统管理</span>
       </template>
-      <el-menu-item index="2-1">用户管理</el-menu-item>
+      <el-menu-item index="/user">
+        <el-icon>
+          <UserFilled/>
+        </el-icon>
+        <span>用户管理</span>
+      </el-menu-item>
     </el-sub-menu>
     <el-menu-item index="3" disabled>
       <el-icon>
