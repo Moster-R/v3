@@ -15,30 +15,14 @@ const routes = [
                 path: 'user',
                 name: 'User',
                 component: User,
-                meta: {
-                    breadcrumb: [
-                        {
-                            name: '用户管理',
-                            path: '/user'
-                        }
-                    ]
-                }
+                meta: {name: '用户管理'}
             },
             {
                 path: 'home',
                 name: 'Home',
                 component: Home,
-                meta: {
-                    breadcrumb: [
-                        {
-                            name: '首页',
-                            path: '/user'
-                        }
-                    ]
-                }
+                meta: {name: '主页'}
             },
-
-
         ]
     },
     {
@@ -57,13 +41,20 @@ const router = createRouter({
 })
 // 路由导航守卫
 router.beforeEach((to, from, next) => {
-    let tags = []
-    to.matched.forEach(item => {
-        if (item.meta.breadcrumb) {
-            tags = tags.concat(item.meta.breadcrumb)
+    const breadcrumb = [];
+    to.matched.forEach(record => {
+        if (record.meta.name ){
+            breadcrumb.push({
+                text:record.meta.name,
+                to: record.path
+            })
         }
     })
-    store.commit('setBreadcrumbList', tags)
+    if (to.meta.name){
+        store.commit('addTags', to);
+    }
+   store.commit('setBreadcrumbList',breadcrumb)
     next()
 })
+
 export default router

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="padding:10px 0">
+    <div style="padding:5px 0">
       <el-input style="width:240px" v-model="username" placeholder="请输入名称">
         <template #suffix>
           <el-icon>
@@ -36,16 +36,23 @@
           <DeleteFilled/>
         </el-icon>
       </el-button>
-      <el-button type="primary">导入
-        <el-icon :size="16" style="margin-left:5px">
-          <UploadFilled/>
-        </el-icon>
-      </el-button>
-      <el-button type="primary">导出
+      <el-button type="primary" @click="leadOut" style="margin-left: 10px">导出
         <el-icon :size="16" style="margin-left:5px">
           <Download/>
         </el-icon>
       </el-button>
+      <el-upload action="http://localhost:8466/user/upload"
+                 :show-file-list="false"
+                 accept="xlsx"
+                 :on-progress="handleUploadProgress"
+                 style="display:inline-block;margin-left:10px;">
+        <el-button type="primary">导入
+          <el-icon :size="16" style="margin-left:5px">
+            <UploadFilled/>
+          </el-icon>
+        </el-button>
+      </el-upload>
+      <el-progress :percentage="percent"></el-progress>
     </div>
     <el-table :data="tableData"
               border
@@ -114,6 +121,7 @@
 <script>
 import {ElMessage, ElMessageBox} from "element-plus";
 
+let handleExcelImport;
 export default {
   name: "User",
   data() {
@@ -165,6 +173,7 @@ export default {
         }]
       },
       headerBg: 'headerBg',
+      percent: 0
     }
   },
   methods: {
@@ -248,6 +257,10 @@ export default {
         })
       })
     },
+    // 导出
+    leadOut(){
+      window.open("http://localhost:8466/user/export")
+    },
     // 重置
     reset() {
       this.username = ""
@@ -273,6 +286,13 @@ export default {
       console.log(val)
       this.multipleSelection = val
     },
+    handleUploadProgress(event, file, fileList) {
+      this.percent = parseInt(event.percent, 10)
+      if (this.percent === 100 ){
+        ElMessage({type:"success",message: "导入成功"})
+        this.load()
+      }
+    }
   },
   created() {
     this.load()
@@ -283,5 +303,16 @@ export default {
 <style>
 .headerBg {
   background: #8fc1f6 !important;
+}
+.progress1{ display:none;}
+.progress{
+  display: flex;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: transparent;
 }
 </style>

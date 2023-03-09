@@ -54,6 +54,12 @@ const api = {
     // 批量删除
     delBatch(ids) {
         return request.post('/user/del/batch',ids)
+    },
+
+
+    // 导入
+    leadingIn(){
+        return request.post('/user/upload')
     }
 
 }

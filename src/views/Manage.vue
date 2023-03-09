@@ -10,6 +10,7 @@
         <el-header style="font-size: 12px; border-bottom: 1px solid #ccc; line-height:60px;display: flex">
           <Header :toggleCollapse="toggleCollapse"></Header>
         </el-header>
+        <TopTag/>
         <!--中间内容-->
         <el-main>
           <router-view/>
@@ -24,10 +25,12 @@
 
 import Aside from "@/components/Aside";
 import Header from "@/components/Header";
+import TopTag from "@/components/TopTag";
 export default {
   components:{
     Aside,
     Header,
+    TopTag
   },
   name: 'Home',
   data() {

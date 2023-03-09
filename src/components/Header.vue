@@ -4,9 +4,9 @@
   </div>
   <div style="flex:22; display: inline-block; padding: 25px 0 0 3px;">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
 <!--      <el-breadcrumb-item v-for="(route,index) in tags" :key="index" :to="{ path: route.path }"><a href="/">{{ route.name }}</a></el-breadcrumb-item>-->
-      <el-breadcrumb-item :to="item.path" v-for="(item,index) in tags" :key="index">{{item.name}}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="item.to" v-for="(item,index) in breadcrumb" :key="index">{{item.text}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
   <el-dropdown>
@@ -45,7 +45,7 @@ export default {
     }
   },
   computed:{
-    ...mapState({tags:state =>  state.tags})
+    ...mapState({breadcrumb:state =>  state.breadcrumb})
   }
 }
 </script>
