@@ -120,8 +120,6 @@
 
 <script>
 import {ElMessage, ElMessageBox} from "element-plus";
-
-let handleExcelImport;
 export default {
   name: "User",
   data() {
@@ -181,8 +179,8 @@ export default {
     load() {
       this.$api.pageQuery(this.pageNum, this.pageSize, this.username, this.email, this.address).then(response => {
         console.log(response)
-        this.tableData = response.records
-        this.total = response.total
+        this.tableData = response.data.records
+        this.total = response.data.total
       })
     },
     // 新增
@@ -190,17 +188,17 @@ export default {
       this.$refs.ruleFormRef.validate(async (valid) => {
         if (valid) {
           const response = await this.$api.add(this.form)
-          if (response) {
+          if (response.code === 200) {
             ElMessage({
               type: "success",
-              message: "添加成功"
+              message: "更新数据成功"
             })
             this.dialogVisible = false
             await this.load()
           } else {
             ElMessage({
               type: "warning",
-              message: "添加失败"
+              message: "更新数据成功"
             })
           }
         }
@@ -219,7 +217,7 @@ export default {
         type: "warning"
       }).then(async () => {
         const response = await this.$api.del(id)
-        if (response) {
+        if (response.code === 200) {
           ElMessage({
             type: "success",
             message: "删除成功"
@@ -243,7 +241,7 @@ export default {
         type: "warning"
       }).then(async () => {
         const response = await this.$api.delBatch(ids)
-        if (response) {
+        if (response.code=== 200) {
           ElMessage({
             type: "success",
             message: "删除成功"
@@ -286,6 +284,7 @@ export default {
       console.log(val)
       this.multipleSelection = val
     },
+    // 导入进图条
     handleUploadProgress(event, file, fileList) {
       this.percent = parseInt(event.percent, 10)
       if (this.percent === 100 ){
@@ -304,15 +303,5 @@ export default {
 .headerBg {
   background: #8fc1f6 !important;
 }
-.progress1{ display:none;}
-.progress{
-  display: flex;
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background-color: transparent;
-}
+
 </style>

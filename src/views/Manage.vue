@@ -32,7 +32,7 @@ export default {
     Header,
     TopTag
   },
-  name: 'Home',
+  name: 'Manage',
   data() {
     return {
       // 是否收起

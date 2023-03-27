@@ -3,11 +3,16 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     breadcrumb: [], //面包屑信息
-    tags: [] // 标签列表
+    tags: [], // 标签列表
+    userInfo:{} //用户信息
   },
   getters: {
   },
   mutations: {
+    // 存入用户信息
+    addUserInfo(state, userInfo) {
+      state.userInfo = userInfo
+    },
     // 更新breadcrumb
     setBreadcrumbList(state,list) {
       state.breadcrumb = list
@@ -30,6 +35,9 @@ export default createStore({
 
   },
   actions: {
+    setUserInfo({commit},data){
+      commit('addUserInfo',data)
+    }
   },
   modules: {
   }

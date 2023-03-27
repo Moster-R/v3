@@ -38,28 +38,95 @@ request.interceptors.response.use(response => {
 })
 
 const api = {
-    // 分页查询
-    pageQuery(pageNum,pageSize,username,email,address){
+
+    /**
+     * 注册
+     * @param param
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    register(param){
+        return request.post('/user/register', param)
+    },
+
+    /**
+     * 登录
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     * @param param
+     */
+    login(param) {
+        return request.post('/user/login',param)
+    },
+
+    findPassword(param){
+        return request.post('/user/findPassword', param)
+    },
+
+    /**
+     * 分页查询
+     * @param pageNum
+     * @param pageSize
+     * @param username
+     * @param email
+     * @param address
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    pageQuery(pageNum, pageSize, username, email, address) {
         return request.get(`/user/page?pageNum=${pageNum}&pageSize=${pageSize}&username=${username}&email=${email}&address=${address}`)
     },
 
-    // 新增或者修改
-    add(params){
-        return request.post('/user',params)
+
+    /**
+     * 新增和修改
+     * @param params
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    add(params) {
+        return request.post('/user', params)
     },
-    // 删除
-    del(id){
+
+    /**
+     * 删除
+     * @param id
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    del(id) {
         return request.delete(`/user/${id}`)
     },
-    // 批量删除
+
+    /**
+     * 批量删除
+     * @param ids
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     delBatch(ids) {
-        return request.post('/user/del/batch',ids)
+        return request.post('/user/del/batch', ids)
     },
 
-
-    // 导入
-    leadingIn(){
-        return request.post('/user/upload')
+    /**
+     * 获取请求权限
+     * @param email
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    getRequestCode(email) {
+        return request({
+            url: '/common/code/request',
+            method: 'post',
+            data: {
+                email: email
+            }
+        })
+    },
+    /**
+     * 2.获取邮箱验证码
+     * @param {*} email
+     * @param code
+     * @returns
+     */
+    getEmailCode(email, code) {
+        let param = {}
+        param.email = email
+        param.code = code
+        return request.post('/common/code/email',param)
     }
 
 }

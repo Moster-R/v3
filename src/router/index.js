@@ -3,8 +3,23 @@ import Manage from "@/views/Manage";
 import User from "@/views/User";
 import Home from "@/views/Home";
 import store from "@/store";
+import Login from "@/views/Login";
+import Register from "@/views/Register";
+import Person from "@/views/Person";
 
 const routes = [
+    {
+        path: "/login",
+        name: "Login",
+        component: Login,
+        meta: { title: '登录', noCache: true }
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: Register,
+        meta: { title: '注册', noCache: true }
+    },
     {
         path: '/',
         name: 'Manage',
@@ -22,6 +37,12 @@ const routes = [
                 name: 'Home',
                 component: Home,
                 meta: {name: '主页'}
+            },
+            {
+                path: "/person",
+                name: "Person",
+                component: Person,
+                meta: { name: '个人信息', noCache: true }
             },
         ]
     },
