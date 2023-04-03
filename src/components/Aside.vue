@@ -32,11 +32,11 @@
         <span>用户管理</span>
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item index="3" disabled>
+    <el-menu-item index="/file">
       <el-icon>
         <document/>
       </el-icon>
-      <template #title>导航三</template>
+      <template #title>文件管理</template>
     </el-menu-item>
     <el-menu-item index="4">
       <el-icon>

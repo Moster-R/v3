@@ -280,6 +280,7 @@ export default {
       this.pageNum = pageNum
       this.load()
     },
+    // 批量删除使用
     handleSelectionChange(val) {
       console.log(val)
       this.multipleSelection = val

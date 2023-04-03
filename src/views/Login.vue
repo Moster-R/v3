@@ -134,9 +134,9 @@ export default {
          await this.$api.login(this.form)
               .then((res) => {
                 if (res.code===200){
-                  // setToken(res.data.token);
                   console.log(res.data)
                   localStorage.setItem("userInfo",  JSON.stringify(res.data));
+                  sessionStorage.setItem('token',res.data.token);
                   this.$store.commit('addUserInfo',res.data);
                   this.$message({
                     message: "登录成功啦😄🎉🎉🎉🎉",
@@ -245,11 +245,6 @@ export default {
           })
         }
       })
-      // this.$message({
-      //   type: "info",
-      //   message: "功能尚未开发额😥",
-      //   showClose: true
-      // })
     },
     // 获取验证码
     sendEmailCode() {

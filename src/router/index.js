@@ -6,19 +6,20 @@ import store from "@/store";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Person from "@/views/Person";
+import File from "@/views/File";
 
 const routes = [
     {
         path: "/login",
         name: "Login",
         component: Login,
-        meta: { title: '登录', noCache: true }
+        meta: {title: '登录', noCache: true}
     },
     {
         path: "/register",
         name: "Register",
         component: Register,
-        meta: { title: '注册', noCache: true }
+        meta: {title: '注册', noCache: true}
     },
     {
         path: '/',
@@ -39,10 +40,16 @@ const routes = [
                 meta: {name: '主页'}
             },
             {
-                path: "/person",
+                path: "person",
                 name: "Person",
                 component: Person,
-                meta: { name: '个人信息', noCache: true }
+                meta: {name: '个人信息', noCache: true}
+            },
+            {
+                path: "file",
+                name: "file",
+                component:File,
+                meta: {name: '文件管理', noCache: true}
             },
         ]
     },
@@ -64,18 +71,25 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const breadcrumb = [];
     to.matched.forEach(record => {
-        if (record.meta.name ){
+        // 面包屑路由
+        if (record.meta.name) {
             breadcrumb.push({
-                text:record.meta.name,
+                text: record.meta.name,
                 to: record.path
             })
         }
     })
-    if (to.meta.name){
+    store.commit('setBreadcrumbList', breadcrumb)
+    // 标签路由添加
+    if (to.meta.name) {
         store.commit('addTags', to);
     }
-   store.commit('setBreadcrumbList',breadcrumb)
-    next()
+    if (to.name !== 'Login' && to.name !== 'Register' && !sessionStorage.getItem('token')) { // 判断用户是否登录
+        next({name: 'Login'})
+    } else {
+        next()
+    }
+
 })
 
 export default router

@@ -18,9 +18,9 @@
       <!--<el-avatar style="font-size:14px"> 墨</el-avatar>-->
       <!--使用本地默认头像无法通过路径正常引用,通过引入的方式进行数据绑定-->
       <el-tooltip placement="left">
-        <template #content>{{ user.username }}</template>
-        <el-avatar v-if="user.avatarUrl=== null" :src="head"/>
-        <el-avatar v-else :src="user.avatarUrl"/>
+        <template #content>{{ userInfo.username }}</template>
+        <el-avatar v-if="userInfo.avatarUrl=== null" :src="head"/>
+        <el-avatar v-else :src="userInfo.avatarUrl"/>
       </el-tooltip>
     </div>
     <template #dropdown>
@@ -47,7 +47,6 @@ export default {
     return {
       head: head, // 默认头像
       value: true,
-      user: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : {},
     }
   },
   methods: {
@@ -60,7 +59,7 @@ export default {
       }).then(() => {
         window.localStorage.removeItem('userInfo')
         window.sessionStorage.removeItem('userInfo')
-        // window.sessionStorage.removeItem('token')
+        window.sessionStorage.removeItem('token')
         this.$router.replace('/login')
         // this.$router.push({name:'Login'})
         ElNotification({
@@ -78,6 +77,7 @@ export default {
   },
   computed: {
     ...mapState({breadcrumb: state => state.breadcrumb}),
+    ...mapState({userInfo: state => state.userInfo})
   }
 }
 </script>
