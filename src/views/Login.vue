@@ -27,7 +27,7 @@
       <div class="tool">
         <div>
           <el-checkbox v-model="checked" @change="remenber"
-          >记住密码
+          >记住账号
           </el-checkbox
           >
         </div>
@@ -292,7 +292,7 @@ export default {
   },
   created() {
     // 检查本地存储中是否存在名为 "userIfo" 的数据，如果存在，则将其解析为 JSON 格式并赋值给当前对象的 "form" 属性，同时将 "checked" 属性设置为 true。
-    const userIfo = window.localStorage.getItem('userInfo')
+    const userIfo = window.sessionStorage.getItem('userInfo')
     if (userIfo) {
       this.form = JSON.parse(userIfo)
       this.checked = true

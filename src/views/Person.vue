@@ -3,6 +3,7 @@
     <el-form :model="form" :rules="rule" ref="ruleFormRef">
       <el-upload
           class="avatar-uploader"
+          accept="image/png,image/gif,image/jpg,image/jpeg"
           action="http://localhost:8466/files/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
@@ -13,7 +14,7 @@
         </el-icon>
       </el-upload>
       <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
-        <el-input v-model="form.username"></el-input>
+        <el-input disabled v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="昵称" :label-width="formLabelWidth" prop="nickname">
         <el-input v-model="form.nickname"></el-input>
@@ -50,13 +51,6 @@ export default {
       formLabelWidth: '120px',
       isSaving: false, // 添加一个标志以防止多次提交
       rule: {
-        username: [
-          {
-            required: true,
-            message: "请输入用户名",
-            trigger: 'blur'
-          }
-        ],
         nickname: [{
           required: true,
           message: "请输入昵称",
@@ -94,6 +88,7 @@ export default {
         if (valid) {
           const response = await this.$api.add(this.form)
           if (response.code === 200) {
+            // 更新vuex存储的用户信息
             this.setUserInfo(response.data)
             // 更新表单数据为最新数据
             this.form = response.data;
@@ -128,8 +123,6 @@ export default {
       isFormChanged(){
         return JSON.stringify(this.formInit) !== JSON.stringify(this.form)
     },
-  },
-  mounted() {
   },
   created() {
     this.$api.findName(this.userInfo.username).then(response => {

@@ -1,6 +1,11 @@
 <template>
 
   <router-view/>
+  <div id="app">
+    <meting-js server="netease" type="playlist" id="2677814952" fixed="true" autoplay="true" loop="all" order="list"
+               preload="auto" list-folded="true" list-max-height="500px" lrc-type="1">
+    </meting-js>
+  </div>
 
 </template>
 <script>

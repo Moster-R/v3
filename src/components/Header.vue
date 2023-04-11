@@ -58,7 +58,7 @@ export default {
         type: 'warning',
       }).then(() => {
         window.localStorage.removeItem('userInfo')
-        window.sessionStorage.removeItem('userInfo')
+        // window.sessionStorage.removeItem('userInfo')
         window.sessionStorage.removeItem('token')
         this.$router.replace('/login')
         // this.$router.push({name:'Login'})

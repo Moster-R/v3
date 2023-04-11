@@ -43,7 +43,7 @@
       <el-table-column prop="size" label="文件大小(KB)"/>
       <el-table-column label="下载">
         <template #default="scope">
-          <el-button type="primary" @click="download(scope.row.url)">下载</el-button>
+          <el-button type="primary" :disabled="!scope.row.enable" @click="download(scope.row.url)">下载</el-button>
         </template>
       </el-table-column>
       <el-table-column label="启用">
@@ -159,6 +159,7 @@ export default {
       this.name = ""
       this.load()
     },
+    // 是否可用开关
     changeEnable(row){
       this.$api.updateIsEnable(row).then(res=>{
         if(res.code === 200){

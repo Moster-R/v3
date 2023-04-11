@@ -40,15 +40,27 @@ request.interceptors.response.use(response => {
     if (typeof res === 'string') {
         res = res ? JSON.parse(res) : res
     }
-    return res
-}, error => {
-    if (error.response.status === 2001){// 如果返回 401 错误，表示 token 无效或已过期
-        router.replace('/login').then(()=>{ // 跳转到登录页面
-            store.commit('deleteUserInfo')
-            // 处理 Promise 的返回结果
-            console.log('跳转到登录页面成功');
+    if(res.status===2001){  // token过期或无效
+        router.replace('/login').then(()=>{
+            store.commit('deleteUserInfo');
+            window.sessionStorage.removeItem('token')
+            console.log('跳转到登录页成功');
+            location.reload(); // 重新加载页面
         })
+        return Promise.reject(new Error(response.messages || 'token过期或无效'))
+    }else if(res.code !== 200){ // 其他错误
+        this.$message({
+            message: res.message,
+            type: 'error',
+            duration: 5 * 1000
+
+        })
+        return Promise.reject(new Error(res.message || '请求出错,请稍重试'))
+
+    }else {
+        return res
     }
+}, error => {
     console.log('err' + error)
     return Promise.reject(error)
 })
