@@ -212,7 +212,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .register {
   height: 100vh;
 
